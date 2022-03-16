@@ -20,6 +20,6 @@ jobs:
       - name: "flutter pub get"
         run: flutter pub get
       - name: Analyze
-        run: dart analyze . --fatal-infos
+        run: dart analyze lib test --fatal-infos
       - name: Format
-        run: dart format --fix -l 100
+        run: dart format lib test --fix -l 100
