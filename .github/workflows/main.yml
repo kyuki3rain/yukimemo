@@ -13,7 +13,6 @@ jobs:
       - name: Checkout pushed commit
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.PRIVATE_REPO_ACCESS_TOKEN }}
           submodules: true
           ref: ${{ github.event.pull_request.head.sha }}
       - name: "Install Flutter"
