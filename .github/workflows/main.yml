@@ -1,0 +1,26 @@
+name: Lint & Analyze
+
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+
+jobs:
+  analyze:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pushed commit
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PRIVATE_REPO_ACCESS_TOKEN }}
+          submodules: true
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: "Install Flutter"
+        run: ./.github/workflows/scripts/install-flutter.sh stable
+      - name: "flutter pub get"
+        run: flutter pub get
+      - name: Analyze
+        run: dart analyze . --fatal-infos
+      - name: Format
+        run: dart format --fix -l 100
