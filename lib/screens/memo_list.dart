@@ -5,15 +5,13 @@ import '../components/create_memo_dialog.dart';
 import '../models/memo.dart';
 
 class MemoListPage extends StatelessWidget {
-  const MemoListPage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const MemoListPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text('yukimemo'),
       ),
       body: Consumer<MemoModel>(builder: (context, memoData, _) {
         return ListView.builder(
@@ -21,6 +19,10 @@ class MemoListPage extends StatelessWidget {
             itemBuilder: (context, index) {
               return Card(
                   child: ListTile(
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed('/edit', arguments: memoData.memo(index));
+                },
                 title: Text(memoData.memo(index).title),
                 trailing: IconButton(
                     icon: const Icon(Icons.delete_forever),
@@ -37,7 +39,7 @@ class MemoListPage extends StatelessWidget {
             return const CreateMemoDialog();
           },
         ),
-        tooltip: 'Increment',
+        tooltip: 'メモを追加',
         child: const Icon(Icons.add),
       ),
     );
