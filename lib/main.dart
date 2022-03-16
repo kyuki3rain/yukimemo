@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'misc/app_info.dart' as app_info;
+import 'common/app_info.dart' as app_info;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
