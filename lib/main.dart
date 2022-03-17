@@ -5,7 +5,14 @@ import 'common/app_info.dart' as app_info;
 import 'screens/memo_edit.dart';
 import 'screens/memo_list.dart';
 
-Future<void> main() async {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     ChangeNotifierProvider(
       create: (context) => MemoModel(),
@@ -33,13 +40,10 @@ class MyApp extends StatelessWidget {
               '/list': (BuildContext context) => const MemoListPage(),
               '/edit': (BuildContext context) {
                 final args = ModalRoute.of(context)!.settings.arguments;
-                if (args is int) {
-                  return Consumer<MemoModel>(builder: (context, memoData, _) {
-                    return MemoEditPage(
-                      memo: memoData.memo(args),
-                      index: args,
-                    );
-                  });
+                if (args is String) {
+                  return MemoEditPage(
+                    uuid: args,
+                  );
                 }
                 return const MemoListPage();
               },

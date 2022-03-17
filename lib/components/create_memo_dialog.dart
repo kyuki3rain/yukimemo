@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 import 'package:yukimemo/models/memo.dart';
 
 class CreateMemoDialog extends StatefulWidget {
@@ -36,9 +37,10 @@ class _CreateMemoDialogState extends State<CreateMemoDialog> {
             return TextButton(
                 child: const Text('追加'),
                 onPressed: () {
-                  var memo = Memo(_dataTextController.text, "");
-                  var index = memoData.add(memo);
-                  Navigator.of(context).pushNamed('/edit', arguments: index);
+                  memoData.add(_dataTextController.text, "").then((uuid) => {
+                        Navigator.of(context)
+                            .pushNamed('/edit', arguments: uuid)
+                      });
                 });
           }),
         ]);

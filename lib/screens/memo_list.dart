@@ -14,21 +14,27 @@ class MemoListPage extends StatelessWidget {
         title: const Text('yukimemo'),
       ),
       body: Consumer<MemoModel>(builder: (context, memoData, _) {
-        return ListView.builder(
-            itemCount: memoData.length,
-            itemBuilder: (context, index) {
-              return Card(
-                  child: ListTile(
-                onTap: () {
-                  Navigator.of(context).pushNamed('/edit', arguments: index);
-                },
-                title: Text(memoData.memo(index).title),
-                trailing: IconButton(
-                    icon: const Icon(Icons.delete_forever),
-                    onPressed: () {
-                      memoData.remove(index);
-                    }),
-              ));
+        return FutureBuilder(
+            future: memoData.fetchItems(),
+            builder: (context, snapshot) {
+              return ListView.builder(
+                  itemCount: memoData.length,
+                  itemBuilder: (context, index) {
+                    Memo memo = memoData.getMemoWithIndex(index);
+                    return Card(
+                        child: ListTile(
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed('/edit', arguments: memo.uuid);
+                      },
+                      title: Text(memo.title),
+                      trailing: IconButton(
+                          icon: const Icon(Icons.delete_forever),
+                          onPressed: () {
+                            memoData.remove(memo);
+                          }),
+                    ));
+                  });
             });
       }),
       floatingActionButton: FloatingActionButton(

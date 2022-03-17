@@ -6,12 +6,10 @@ import '../models/memo.dart';
 class MemoEditPage extends StatefulWidget {
   const MemoEditPage({
     Key? key,
-    required this.memo,
-    required this.index,
+    required this.uuid,
   }) : super(key: key);
 
-  final Memo memo;
-  final int index;
+  final String uuid;
 
   // createState()　で"State"（Stateを継承したクラス）を返す
   @override
@@ -19,14 +17,17 @@ class MemoEditPage extends StatefulWidget {
 }
 
 class _MemoEditPageState extends State<MemoEditPage> {
-  late TextEditingController _titleController;
-  late TextEditingController _contentController;
+  late TextEditingController _titleController = TextEditingController();
+  late TextEditingController _contentController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _titleController = TextEditingController(text: widget.memo.title);
-    _contentController = TextEditingController(text: widget.memo.content);
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Memo memo = context.read<MemoModel>().getMemo(widget.uuid);
+      _titleController = TextEditingController(text: memo.title);
+      _contentController = TextEditingController(text: memo.content);
+    });
   }
 
   @override
@@ -62,9 +63,9 @@ class _MemoEditPageState extends State<MemoEditPage> {
             Consumer<MemoModel>(builder: (context, memoData, _) {
           return FloatingActionButton(
             onPressed: () {
-              final Memo memo =
-                  Memo(_titleController.text, _contentController.text);
-              memoData.update(widget.index, memo);
+              final Memo memo = Memo(
+                  widget.uuid, _titleController.text, _contentController.text);
+              memoData.update(memo);
               Navigator.pushNamedAndRemoveUntil(context, '/list', (_) => false);
             },
             tooltip: '保存',
