@@ -20,8 +20,7 @@ class MemoListPage extends StatelessWidget {
               return Card(
                   child: ListTile(
                 onTap: () {
-                  Navigator.of(context)
-                      .pushNamed('/edit', arguments: memoData.memo(index));
+                  Navigator.of(context).pushNamed('/edit', arguments: index);
                 },
                 title: Text(memoData.memo(index).title),
                 trailing: IconButton(

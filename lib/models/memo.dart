@@ -16,9 +16,11 @@ class MemoModel extends ChangeNotifier {
     return _listItems[index];
   }
 
-  void add(Memo memo) {
+  int add(Memo memo) {
     _listItems.add(memo);
     notifyListeners();
+
+    return _listItems.length - 1;
   }
 
   void remove(int index) {
@@ -26,8 +28,7 @@ class MemoModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void update(Memo memo) {
-    var index = _listItems.indexWhere((element) => element.title == memo.title);
+  void update(int index, Memo memo) {
     _listItems[index] = memo;
     notifyListeners();
   }
