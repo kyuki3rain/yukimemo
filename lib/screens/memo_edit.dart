@@ -66,7 +66,7 @@ class _MemoEditPageState extends State<MemoEditPage> {
               final Memo memo = Memo(
                   widget.uuid, _titleController.text, _contentController.text);
               memoData.update(memo);
-              Navigator.pushNamedAndRemoveUntil(context, '/list', (_) => false);
+              Navigator.pop(context);
             },
             tooltip: '保存',
             child: const Icon(Icons.save),
