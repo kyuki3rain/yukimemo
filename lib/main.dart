@@ -6,7 +6,6 @@ import 'screens/memo_edit.dart';
 import 'screens/memo_list.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     ChangeNotifierProvider(
       create: (context) => MemoModel(),
@@ -34,10 +33,13 @@ class MyApp extends StatelessWidget {
               '/list': (BuildContext context) => const MemoListPage(),
               '/edit': (BuildContext context) {
                 final args = ModalRoute.of(context)!.settings.arguments;
-                if (args is Memo) {
-                  return MemoEditPage(
-                    memo: args,
-                  );
+                if (args is int) {
+                  return Consumer<MemoModel>(builder: (context, memoData, _) {
+                    return MemoEditPage(
+                      memo: memoData.memo(args),
+                      index: args,
+                    );
+                  });
                 }
                 return const MemoListPage();
               },
