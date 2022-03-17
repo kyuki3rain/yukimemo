@@ -36,8 +36,9 @@ class _CreateMemoDialogState extends State<CreateMemoDialog> {
             return TextButton(
                 child: const Text('追加'),
                 onPressed: () {
-                  memoData.add(Memo(_dataTextController.text, ""));
-                  Navigator.pop(context);
+                  var memo = Memo(_dataTextController.text, "");
+                  memoData.add(memo);
+                  Navigator.of(context).pushNamed('/edit', arguments: memo);
                 });
           }),
         ]);

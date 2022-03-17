@@ -25,4 +25,10 @@ class MemoModel extends ChangeNotifier {
     _listItems.removeAt(index);
     notifyListeners();
   }
+
+  void update(Memo memo) {
+    var index = _listItems.indexWhere((element) => element.title == memo.title);
+    _listItems[index] = memo;
+    notifyListeners();
+  }
 }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yukimemo/models/memo.dart';
 import 'common/app_info.dart' as app_info;
-import 'screens/memo_ilst.dart';
+import 'screens/memo_edit.dart';
+import 'screens/memo_list.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +29,19 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: const MemoListPage(title: 'yukimemo'),
+            initialRoute: '/list',
+            routes: <String, WidgetBuilder>{
+              '/list': (BuildContext context) => const MemoListPage(),
+              '/edit': (BuildContext context) {
+                final args = ModalRoute.of(context)!.settings.arguments;
+                if (args is Memo) {
+                  return MemoEditPage(
+                    memo: args,
+                  );
+                }
+                return const MemoListPage();
+              },
+            },
           );
         });
   }
