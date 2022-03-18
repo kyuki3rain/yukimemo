@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../models/memo.dart';
 
-class MemoEditPage extends StatefulWidget {
+class MemoEditPage extends ConsumerStatefulWidget {
   const MemoEditPage({
     Key? key,
     required this.uuid,
@@ -16,18 +15,17 @@ class MemoEditPage extends StatefulWidget {
   _MemoEditPageState createState() => _MemoEditPageState();
 }
 
-class _MemoEditPageState extends State<MemoEditPage> {
+class _MemoEditPageState extends ConsumerState<MemoEditPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      Memo memo = context.read<MemoModel>().getMemo(widget.uuid);
-      _titleController.text = memo.title;
-      _contentController.text = memo.content;
-    });
+
+    Memo memo = ref.read(memoProvider).getMemo(widget.uuid);
+    _titleController.text = memo.title;
+    _contentController.text = memo.content;
   }
 
   @override
@@ -62,7 +60,7 @@ class _MemoEditPageState extends State<MemoEditPage> {
           onPressed: () {
             final Memo memo = Memo(
                 widget.uuid, _titleController.text, _contentController.text);
-            context.read<MemoModel>().update(memo);
+            ref.read(memoProvider).update(memo);
             Navigator.pop(context);
           },
           tooltip: '保存',

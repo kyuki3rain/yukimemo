@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // Import the firebase_core and cloud_firestore plugin
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Memo {
   late String uuid;
@@ -62,3 +63,5 @@ class MemoModel extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+final memoProvider = ChangeNotifierProvider((ref) => MemoModel());
