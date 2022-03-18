@@ -22,9 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'yukimemo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: "Noto Sans JP"),
       initialRoute: '/list',
       routes: <String, WidgetBuilder>{
         '/list': (BuildContext context) => const MemoListPage(),
