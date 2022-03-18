@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yukimemo/models/memo.dart';
 import 'screens/memo_edit.dart';
 import 'screens/memo_list.dart';
 
