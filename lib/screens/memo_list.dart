@@ -13,10 +13,10 @@ class MemoListPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('yukimemo'),
       ),
-      body: Consumer<MemoModel>(builder: (context, memoData, _) {
-        return FutureBuilder(
-            future: memoData.fetchItems(),
-            builder: (context, snapshot) {
+      body: FutureBuilder(
+          future: context.read<MemoModel>().fetchItems(),
+          builder: (context, snapshot) {
+            return Consumer<MemoModel>(builder: (context, memoData, _) {
               return ListView.builder(
                   itemCount: memoData.length,
                   itemBuilder: (context, index) {
@@ -36,7 +36,7 @@ class MemoListPage extends StatelessWidget {
                     ));
                   });
             });
-      }),
+          }),
       floatingActionButton: FloatingActionButton(
         onPressed: () => showDialog(
           context: context,

@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/list': (BuildContext context) => const MemoListPage(),
         '/edit': (BuildContext context) {
-          final args = ModalRoute.of(context)!.settings.arguments;
+          final args = ModalRoute.of(context)?.settings.arguments;
+
           if (args is String) {
             return MemoEditPage(
               uuid: args,

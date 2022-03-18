@@ -17,23 +17,22 @@ class MemoEditPage extends StatefulWidget {
 }
 
 class _MemoEditPageState extends State<MemoEditPage> {
-  late TextEditingController _titleController = TextEditingController();
-  late TextEditingController _contentController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       Memo memo = context.read<MemoModel>().getMemo(widget.uuid);
-      _titleController = TextEditingController(text: memo.title);
-      _contentController = TextEditingController(text: memo.content);
+      _titleController.text = memo.title;
+      _contentController.text = memo.content;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MemoModel>(builder: (context, memoData, _) {
-      return Scaffold(
+    return Scaffold(
         body: ListView(
           children: <Widget>[
             TextField(
@@ -59,20 +58,15 @@ class _MemoEditPageState extends State<MemoEditPage> {
             ),
           ],
         ),
-        floatingActionButton:
-            Consumer<MemoModel>(builder: (context, memoData, _) {
-          return FloatingActionButton(
-            onPressed: () {
-              final Memo memo = Memo(
-                  widget.uuid, _titleController.text, _contentController.text);
-              memoData.update(memo);
-              Navigator.pop(context);
-            },
-            tooltip: '保存',
-            child: const Icon(Icons.save),
-          );
-        }),
-      );
-    });
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            final Memo memo = Memo(
+                widget.uuid, _titleController.text, _contentController.text);
+            context.read<MemoModel>().update(memo);
+            Navigator.pop(context);
+          },
+          tooltip: '保存',
+          child: const Icon(Icons.save),
+        ));
   }
 }

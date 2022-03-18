@@ -32,17 +32,17 @@ class _CreateMemoDialogState extends State<CreateMemoDialog> {
               onPressed: () {
                 Navigator.pop(context);
               }),
-          Consumer<MemoModel>(builder: (context, memoData, _) {
-            return TextButton(
-                child: const Text('追加'),
-                onPressed: () {
-                  Navigator.pop(context);
-                  memoData.add(_dataTextController.text, "").then((uuid) => {
-                        Navigator.of(context)
-                            .pushNamed('/edit', arguments: uuid)
-                      });
-                });
-          }),
+          TextButton(
+              child: const Text('追加'),
+              onPressed: () {
+                context
+                    .read<MemoModel>()
+                    .add(_dataTextController.text, "")
+                    .then((uuid) => {
+                          Navigator.of(context)
+                              .pushReplacementNamed('/edit', arguments: uuid)
+                        });
+              }),
         ]);
   }
 }
