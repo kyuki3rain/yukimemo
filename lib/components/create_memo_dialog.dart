@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 import 'package:yukimemo/models/memo.dart';
 
 class CreateMemoDialog extends StatefulWidget {
