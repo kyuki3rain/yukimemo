@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../models/memo.dart';
@@ -6,9 +7,11 @@ class MemoEditPage extends ConsumerStatefulWidget {
   const MemoEditPage({
     Key? key,
     required this.uuid,
+    required this.user,
   }) : super(key: key);
 
   final String uuid;
+  final User user;
 
   // createState()　で"State"（Stateを継承したクラス）を返す
   @override

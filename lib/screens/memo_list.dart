@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -5,7 +6,12 @@ import '../components/create_memo_dialog.dart';
 import '../models/memo.dart';
 
 class MemoListPage extends ConsumerWidget {
-  const MemoListPage({Key? key}) : super(key: key);
+  const MemoListPage({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
+
+  final User user;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
