@@ -1,17 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yukimemo/models/setting.dart';
 import '../models/memo.dart';
 
 class MemoEditPage extends ConsumerStatefulWidget {
   const MemoEditPage({
     Key? key,
     required this.uuid,
-    required this.user,
   }) : super(key: key);
 
   final String uuid;
-  final User user;
 
   // createState()　で"State"（Stateを継承したクラス）を返す
   @override
@@ -37,13 +35,14 @@ class _MemoEditPageState extends ConsumerState<MemoEditPage> {
         body: ListView(
           children: <Widget>[
             TextField(
-                controller: _titleController,
-                decoration: const InputDecoration(
-                  hintText: 'タイトルを入力',
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                ),
-                style: const TextStyle(fontSize: 20.0)),
+              controller: _titleController,
+              decoration: const InputDecoration(
+                hintText: 'タイトルを入力',
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              ),
+              style: ref.watch(settingProvider).getTitleFont(),
+            ),
             TextField(
               controller: _contentController,
               keyboardType: TextInputType.multiline,
@@ -56,6 +55,7 @@ class _MemoEditPageState extends ConsumerState<MemoEditPage> {
               maxLines: null,
               minLines: 10,
               autofocus: true,
+              style: ref.watch(settingProvider).getBodyFont(),
             ),
           ],
         ),

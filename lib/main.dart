@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:yukimemo/screens/setting.dart';
 
 import 'auth_controller.dart';
 import 'screens/memo_edit.dart';
@@ -34,21 +35,20 @@ class MyApp extends ConsumerWidget {
         : MaterialApp(
             title: 'yukimemo',
             theme: ThemeData(
-                primarySwatch: Colors.blue, fontFamily: "Noto Sans JP"),
+              primarySwatch: Colors.blue,
+              fontFamily: "Noto Sans JP",
+            ),
             initialRoute: '/list',
             routes: <String, WidgetBuilder>{
-              '/list': (BuildContext context) =>
-                  MemoListPage(user: authControllerState),
+              '/setting': (BuildContext context) => const SettingPage(),
+              '/list': (BuildContext context) => const MemoListPage(),
               '/edit': (BuildContext context) {
                 final args = ModalRoute.of(context)?.settings.arguments;
 
                 if (args is String) {
-                  return MemoEditPage(
-                    uuid: args,
-                    user: authControllerState,
-                  );
+                  return MemoEditPage(uuid: args);
                 }
-                return MemoListPage(user: authControllerState);
+                return const MemoListPage();
               },
             },
           );

@@ -28,12 +28,12 @@ class _CreateMemoDialogState extends ConsumerState<CreateMemoDialog> {
         ),
         actions: <Widget>[
           TextButton(
-              child: const Text('キャンセル'),
+              child: const Text('cancel'),
               onPressed: () {
                 Navigator.pop(context);
               }),
           TextButton(
-              child: const Text('追加'),
+              child: const Text('create'),
               onPressed: () {
                 ref.read(memoProvider).add(_dataTextController.text, "").then(
                     (uuid) => {
