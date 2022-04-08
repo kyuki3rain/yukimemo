@@ -34,13 +34,18 @@ class _CreateMemoDialogState extends ConsumerState<CreateMemoDialog> {
               }),
           TextButton(
               child: const Text('create'),
-              onPressed: () {
-                ref.read(memoProvider).add(_dataTextController.text, "").then(
-                    (uuid) => {
-                          Navigator.of(context)
-                              .pushReplacementNamed('/edit', arguments: uuid)
-                        });
-              }),
+              onPressed: !(_dataTextController.text == "")
+                  ? null
+                  : () {
+                      ref
+                          .read(memoProvider)
+                          .add(_dataTextController.text, "")
+                          .then((uuid) => {
+                                Navigator.of(context).pushReplacementNamed(
+                                    '/edit',
+                                    arguments: uuid)
+                              });
+                    }),
         ]);
   }
 }
