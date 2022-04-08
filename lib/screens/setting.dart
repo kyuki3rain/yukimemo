@@ -12,11 +12,6 @@ class SettingPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    useEffect(() {
-      ref.read(settingProvider).fetchItems();
-      return null;
-    }, []);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('yukimemo',
